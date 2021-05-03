@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-container
+    ports:
+      - 3307:3306
+    volumes:
+      - ./db/init.d:/docker-entrypoint-initdb.d
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+    environment:
+      - "TZ=${TZ:-Asia/Tokyo}"
+      - "MYSQL_ROOT_PASSWORD=root123"
+      - "MYSQL_DATABASE=testdb"
+      - "MYSQL_USER=ubuntu"
+      - "MYSQL_PASSWORD=ubuntu123"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
